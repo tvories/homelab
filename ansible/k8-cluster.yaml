@@ -1,7 +1,7 @@
 ---
 
 - name: K8 Cluster post-terraform
-  hosts: K8-MASTER
+  hosts: K8-*
   become: true
 
   roles:
