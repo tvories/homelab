@@ -23,6 +23,10 @@ variable "k8_master_name" {
   description = "Name of the kubernetes master"
 }
 
+variable "k8_node_name" {
+  description = "Name of the kubernetes nodes"
+}
+
 variable "k8_vm_folder" {
   description = "VM folder for k8 stuff to go"
 }
