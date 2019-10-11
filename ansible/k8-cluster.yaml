@@ -1,0 +1,9 @@
+---
+
+- name: K8 Cluster post-terraform
+  hosts: K8-MASTER
+  become: true
+
+  roles:
+    - role: samdoran.fish
+    - k8s-cluster
