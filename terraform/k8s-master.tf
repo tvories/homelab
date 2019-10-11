@@ -15,7 +15,6 @@ resource "vsphere_virtual_machine" "K8-MASTER" {
   guest_id = data.vsphere_virtual_machine.centos_template.guest_id
 
   # VM storage #
-  # TODO: Do I really need this?
   disk {
     label            = "${var.k8_master_name}.vmdk"
     size             = data.vsphere_virtual_machine.centos_template.disks[0].size
