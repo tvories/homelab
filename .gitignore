@@ -2,3 +2,4 @@ secrets.*
 .terraform
 *.tfstate*
 ssh/
+terraform-inventory
