@@ -1,5 +1,10 @@
 ---
 
+- name: update the system
+  yum:
+    name: "*"
+    state: latest
+
 - name: Create K8 User account
   user:
     name: "{{ k8_username }}"
@@ -19,3 +24,27 @@
   user:
     name: vagrant
     state: absent
+
+- name: Install nfs-utils
+  package:
+    name: nfs-utils
+    state: present
+
+- name: Stop and disable firewalld.
+  service:
+    name: firewalld
+    state: stopped
+    enabled: False
+
+- name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+  shell: |
+    swapoff -a
+
+- name: Disable SWAP in fstab since kubernetes can't work with swap enabled (2/2)
+  replace:
+    path: /etc/fstab
+    regexp: '^/dev/mapper/centos-swap\s*swap\s*swap\s*defaults\s*[0-9]\s*[0-9]$'
+    replace: '# /dev/mapper/centos-swap swap                    swap    defaults        0 0'
+
+- name: Reboot the system
+  reboot:

@@ -3,3 +3,4 @@ secrets.*
 *.tfstate*
 ssh/
 terraform-inventory
+*secret*

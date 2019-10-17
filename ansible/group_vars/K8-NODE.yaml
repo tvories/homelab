@@ -1,3 +1,5 @@
+---
+
 ansible_connection: ssh
-ansible_user: antsy
-ansible_ssh_private_key_file: ssh/antsy.key
+
+#TODO: Figure out how to combine these groups with terraform inventory instead of needing two separate node and master group files
