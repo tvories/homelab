@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: test-t-vo-us
+  namespace: cert-manager
+spec:
+  secretName: test-t-vo-us
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: 'test.t-vo.us'
+  dnsNames:
+    - test.t-vo.us
+  # keySize: 4096
+  # keyAlgorithm: rsa
+  
