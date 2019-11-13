@@ -1,0 +1,4 @@
+---
+
+# python3 not currently installed on centos nodes
+# ansible_python_interpreter: /usr/bin/python3

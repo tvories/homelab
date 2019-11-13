@@ -1,0 +1,9 @@
+# ---
+
+# plugin: vmware_vm_inventory
+# strict: False
+# hostname: vcenter_fqdn
+# username: username
+# password: password
+# validate_certs: False
+# with_tags: True

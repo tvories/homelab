@@ -4,3 +4,4 @@ secrets.*
 ssh/
 terraform-inventory
 *secret*
+homelab.vmware.yml
