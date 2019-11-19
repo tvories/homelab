@@ -1,0 +1,46 @@
+---
+# Commands shared between linux systems
+
+- name: Install linux packages
+  package:
+    name: "{{ linux_packages }}"
+    state: present
+
+- name: Configure ntp
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    backup: yes
+  tags: ntp
+
+- name: Start ntp service and ensure it's started automatically
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+  tags: ntp
+
+- name: Ensure vagrant user doesn't exist on linux systems
+  user:
+    name: vagrant
+    state: absent
+
+- name: Ensure pi user doesn't exist
+  user:
+    name: pi
+    state: absent
+  
+- name: Ensure tadmin user exists
+  user:
+    name: tadmin
+    shell: /usr/bin/fish
+    password: "{{ tadmin_password }}"
+
+- name: Add tadmin User to sudo
+  lineinfile:
+    path: /etc/sudoers.d/tadmin
+    line: 'tadmin ALL=(ALL) ALL: ALL'
+    state: present
+    mode: 0440
+    create: yes
+    validate: 'visudo -cf %s'

@@ -1,0 +1,14 @@
+---
+
+- include_tasks: linux.yml
+  when: ansible_system == "Linux"
+  
+- include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+  tags: debian
+
+- include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- include_tasks: windows.yml
+  when: ansible_os_family == "Windows"

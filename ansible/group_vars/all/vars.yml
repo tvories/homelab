@@ -1,0 +1,16 @@
+---
+# shared vars across all groups
+
+ntpserver: DC1.mcbadass.local
+linux_packages:
+  - vim
+  - byobu
+  - neovim
+  - python3
+  - python-pip
+  - python3-pip
+
+windows_packages:
+  - chocolatey
+
+fish_release_version: 3
