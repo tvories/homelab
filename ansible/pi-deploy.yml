@@ -1,0 +1,10 @@
+---
+
+- name: Raspberry Pi deployment playbook
+  hosts: raspi
+  become: true
+
+  roles:
+    - samdoran.fish
+    - base
+    - domain-joined
