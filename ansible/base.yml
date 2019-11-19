@@ -1,7 +1,8 @@
 ---
+# Playbook for base systems
 
-- name: Raspberry Pi deployment playbook
-  hosts: raspi
+- name: base profile deployment playbook
+  hosts: tbuntu.mcbadass.local
   become: true
 
   roles:

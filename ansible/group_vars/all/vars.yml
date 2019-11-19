@@ -2,8 +2,10 @@
 # shared vars across all groups
 
 ntpserver: DC1.mcbadass.local
+timezone: America/Denver
 linux_packages:
   - vim
+  - ntp
   - byobu
   - neovim
   - python3
@@ -13,4 +15,16 @@ linux_packages:
 windows_packages:
   - chocolatey
 
+## Fish shell parameters
 fish_release_version: 3
+
+## telegraf parameters
+telegraf_agent_version: 1.12.5
+telegraf_agent_package_method: repo
+telegraf_agent_package_state: present
+telegraf_agent_output:
+  - type: influxdb
+    config:
+      - urls = ["http://docker2.mcbadass.local:8086"]
+      - database = "computers"
+telegraf_agent_interval: 30

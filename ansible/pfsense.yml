@@ -1,0 +1,8 @@
+---
+
+- name: Pfsense Rules
+  hosts: pfsense
+  become: true
+
+  roles:
+    - pfsense

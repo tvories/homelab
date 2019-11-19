@@ -1,0 +1,18 @@
+---
+
+# Telegraf specific to raspi
+telegraf_plugins_default:
+  - plugin: netstat
+  - plugin: net
+  - plugin: file
+    config:
+      - files = ["/sys/class/thermal/thermal_zone0/temp"]
+      - name_override = "cpu_temperature"
+      - data_format = "value"
+      - data_type = "integer"
+  - plugin: exec
+    config:
+      - commands = ["/opt/vc/bin/vcgencmd measure_temp"]
+      - name_override = "gpu_temperature"
+      - data_format = "grok"
+      - grok_patterns = ["%{NUMBER:value:float}"]
