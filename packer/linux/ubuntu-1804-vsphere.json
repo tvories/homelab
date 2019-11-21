@@ -1,0 +1,89 @@
+{
+    "variables": {
+      "name": "packer-ubuntu-1804",
+      "disk_size": "20480",
+      "headless": "false",
+      "vm_hardware_version": "13",
+      "iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-server-amd64.iso",
+      "iso_path": "[SATAStorage] ISO/ubuntu-18.04.3.iso",
+      "iso_checksum": "7d8e0055d663bffa27c1718685085626cb59346e7626ba3d3f476322271f573e",
+      "iso_checksum_type": "sha256",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "60m"
+    },
+    "builders": [{
+      "type": "vsphere-iso",
+      "vm_name": "{{ user `name` }}",
+      "insecure_connection": true,
+      "iso_paths": [
+        "{{ user `iso_path`}}"
+      ],
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha256",
+      "vm_version": "{{user `vm_hardware_version`}}",
+      "boot_wait": "20s",
+      "guest_os_type": "ubuntu64Guest",
+      "disk_size": "{{user `disk_size`}}",
+      "ssh_timeout": "{{user `ssh_timeout`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_port": 22,
+      "CPUs": 2,
+      "cpu_cores": 2,
+      "CPU_hot_plug": true,
+      "RAM": 2048,
+      "RAM_reserve_all": true,
+      "RAM_hot_plug": true,
+      "network": "{{ user `vm_network` }}",
+      "disk_thin_provisioned": true,
+      "disk_controller_type": "pvscsi",
+      "network_card": "vmxnet3",
+      "convert_to_template": true,
+      "boot_command": [
+        "<enter><wait><f6><wait><esc><wait>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs>",
+          "/install/vmlinuz",
+          " initrd=/install/initrd.gz",
+          " priority=critical",
+          " locale=en_US",
+          " file=/media/preseed.cfg",
+          "<enter>"
+      ],
+      "ssh_pty": "true",
+      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+      "vcenter_server": "{{ user `vcenter_server` }}",
+      "username": "{{ user `vcenter_username`}}",
+      "password": "{{ user `vcenter_password` }}",
+      "host": "{{ user `esxi_host` }}",
+      "cluster": "{{ user `cluster` }}",
+      "datastore": "{{ user `datastore` }}",
+      "folder": "{{ user `folder` }}",
+      "floppy_files": [
+        "http/preseed.cfg"
+      ]
+    }
+  ],
+      
+      "provisioners": [
+        {
+        "type": "shell",
+        "scripts": [
+          "scripts/apt.sh",
+          "scripts/cleanup.sh",
+          "scripts/vmware.sh",
+          "scripts/python.sh",
+          "scripts/ansible.sh"
+        ]
+      }
+    ]
+  }
+  

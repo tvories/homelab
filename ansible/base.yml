@@ -2,7 +2,7 @@
 # Playbook for base systems
 
 - name: base profile deployment playbook
-  hosts: tbuntu*
+  hosts: all
   become: true
 
   roles:

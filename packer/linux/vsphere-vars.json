@@ -1,0 +1,11 @@
+{
+    "vm_network": "VLAN 1 - LAN",
+    "esxi_host": "esx3.mcbadass.local",
+    "datastore": "SSD",
+    "vcenter_server": "vcenter.mcbadass.local",
+    "datacenter": "Home",
+    "folder": "Templates",
+    "cluster": "Cluster-01",
+    "disk_mode": "thin",
+    "vm_hardware_version": "13"
+}

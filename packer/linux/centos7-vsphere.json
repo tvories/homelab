@@ -1,0 +1,67 @@
+{
+    "variables": {
+        "name": "centos7-packer",
+        "disk_size": "20480",
+        "headless": "false",
+        "iso_url": "http://centos.host-engine.com/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso",
+        "iso_path": "[SATAStorage] ISO/CentOS-7-x86_64-Minimal-1908.iso",
+        "iso_checksum": "9A2C47D97B9975452F7D582264E9FC16D108ED8252AC6816239A3B58CEF5C53D",
+        "iso_checksum_type": "sha256",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "60m"
+    },
+    "builders": [
+      {
+        "type": "vsphere-iso",
+        "vm_name": "{{ user `name` }}",
+        "insecure_connection": true,
+        "iso_paths": [
+          "{{ user `iso_path`}}"
+        ],
+        "iso_checksum": "{{ user `iso_checksum` }}",
+        "iso_checksum_type": "sha256",
+        "boot_command": [
+          "<tab> linux inst.ks=hd:/dev/fd0:ks.cfg<enter><wait>"
+        ],
+        "boot_wait": "10s",
+        "guest_os_type": "centos64guest",
+        "disk_size": "{{ user `disk_size` }}",
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_port": 22,
+        "vm_version": "{{ user `vm_hardware_version` }}",
+        "CPUs": 2,
+        "cpu_cores": 2,
+        "CPU_hot_plug": true,
+        "RAM": 2048,
+        "RAM_hot_plug": true,
+        "network": "{{ user `vm_network` }}",
+        "disk_thin_provisioned": true,
+        "disk_controller_type": "pvscsi",
+        "network_card": "vmxnet3",
+        "convert_to_template": true,
+        "vcenter_server": "{{ user `vcenter_server` }}",
+        "username": "{{ user `vcenter_username`}}",
+        "password": "{{ user `vcenter_password` }}",
+        "host": "{{ user `esxi_host` }}",
+        "cluster": "{{ user `cluster` }}",
+        "datastore": "{{ user `datastore` }}",
+        "folder": "{{ user `folder` }}",
+        "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
+        "floppy_files": [
+          "http/ks.cfg"
+        ]
+      }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": [
+                "scripts/ansible-centos.sh",
+                "scripts/vmware-centos.sh",
+                "scripts/yum-update.sh"
+            ]
+        }
+    ]
+  }

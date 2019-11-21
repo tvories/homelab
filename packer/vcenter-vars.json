@@ -1,0 +1,9 @@
+{
+    "vcenter": "vcenter",
+    "datacenter": "Home",
+    "cluster": "Cluster-01",
+    "datastore": "LUN03",
+    "vm_network": "LAN",
+    "vm_folder": "Templates",
+    "overwrite": "true"
+}
