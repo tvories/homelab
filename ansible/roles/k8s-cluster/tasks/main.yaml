@@ -18,7 +18,7 @@
     state: present
     mode: 0440
     create: yes
-    validate: 'visudo -cf %s'         
+    validate: 'visudo -cf %s'
 
 - name: Ensure vagrant user is gone
   user:

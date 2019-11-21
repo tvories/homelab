@@ -5,7 +5,8 @@
   become: true
 
   roles:
-    - samdoran.fish
-    - base
-    - domain-joined
-    - dj-wasabi.telegraf
+    - { role: galaxy_roles/samdoran.fish, tags: ['fish']}
+    - { role: base, tags: ['base'] }
+    - { role: domain-joined, tags: ['domain-joined'] }
+    - { role: galaxy_roles/dj-wasabi.telegraf, tags: ['telegraf']}
+    - { role: raspi_telegraf, tags: ['raspi_telegraf'] }

@@ -1,0 +1,9 @@
+---
+
+- name: Allow telegraf user to access GPU stats
+  user:
+    name: telegraf
+    groups: 
+      - video
+      - telegraf
+    append: yes

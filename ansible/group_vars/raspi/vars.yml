@@ -2,8 +2,13 @@
 
 # Telegraf specific to raspi
 telegraf_plugins_default:
-  - plugin: netstat
   - plugin: net
+  - plugin: disk
+  - plugin: io
+  - plugin: mem
+  - plugin: system
+  - plugin: swap
+  - plugin: netstat
   - plugin: file
     config:
       - files = ["/sys/class/thermal/thermal_zone0/temp"]
@@ -16,3 +21,6 @@ telegraf_plugins_default:
       - name_override = "gpu_temperature"
       - data_format = "grok"
       - grok_patterns = ["%{NUMBER:value:float}"]
+  - plugin: cpu
+    config:
+      - percpu = true

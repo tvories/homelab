@@ -1,0 +1,9 @@
+---
+
+- name: DMZ Interface
+  opoplawski.pfsense.pfsense_interface:
+    descr: VLAN60DMZ
+    interface: "{{ pfsense_lan_nic }}.60"
+    enable: true
+    state: present
+    ipv4_address: 192.168.60.1

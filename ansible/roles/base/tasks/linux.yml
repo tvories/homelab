@@ -14,33 +14,34 @@
   tags: ntp
 
 - name: Start ntp service and ensure it's started automatically
-  service:
+  systemd:
     name: ntp
     state: started
     enabled: yes
+    daemon_reload: yes
   tags: ntp
 
-- name: Ensure vagrant user doesn't exist on linux systems
+- name: Ensure certain users doesn't exist
   user:
-    name: vagrant
+    name: "{{ item }}"
     state: absent
-
-- name: Ensure pi user doesn't exist
-  user:
-    name: pi
-    state: absent
+  loop: "{{ linux_users_to_remove }}"
   
-- name: Ensure tadmin user exists
+- name: Ensure {{ linux_admin_user }} exists
   user:
-    name: tadmin
+    name: "{{ linux_admin_user }}"
     shell: /usr/bin/fish
-    password: "{{ tadmin_password }}"
+    password: "{{ linux_admin_password }}"
 
-- name: Add tadmin User to sudo
+- name: Add linux admin user to sudo
   lineinfile:
-    path: /etc/sudoers.d/tadmin
-    line: 'tadmin ALL=(ALL) ALL: ALL'
+    path: /etc/sudoers.d/{{ linux_admin_user }}
+    line: '{{ linux_admin_user }} ALL=(ALL:ALL) ALL'
     state: present
     mode: 0440
     create: yes
     validate: 'visudo -cf %s'
+
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"

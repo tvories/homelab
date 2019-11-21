@@ -1,0 +1,45 @@
+---
+
+# VLAN Configuration
+
+- name: 192.168.1.0/24 - Legacy
+  opoplawski.pfsense.pfsense_vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: 1
+    descr: 192.168.1.0/24 - Legacy
+    state: present
+
+- name: 192.168.20.0/24 - Primary
+  opoplawski.pfsense.pfsense_vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: 20
+    descr: 192.168.20.0/24 - Primary
+    state: present
+
+- name: 192.168.40.0/24 - Guest WiFi
+  opoplawski.pfsense.pfsense_vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: 40
+    descr: 192.168.40.0/24 - Guest WiFi
+    state: present
+
+- name: 192.168.50.0/24 - IoT
+  opoplawski.pfsense.pfsense_vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: 50
+    descr: 192.168.50.0/24 - IoT
+    state: present
+
+- name: 192.168.60.0/24 - DMZ
+  opoplawski.pfsense.pfsense_vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: 60
+    descr: 192.168.60.0/24 - DMZ
+    state: present
+
+- name: 192.168.70.0/24 - Joey Backup
+  opoplawski.pfsense.pfsense_vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: 70
+    descr: 192.168.70.0/24 - Joey Backup
+    state: present

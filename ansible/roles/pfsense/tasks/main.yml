@@ -1,0 +1,4 @@
+---
+
+- include_tasks: vlans.yml
+- include_tasks: interfaces.yml

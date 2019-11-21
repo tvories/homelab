@@ -19,7 +19,7 @@ windows_packages:
 fish_release_version: 3
 
 ## telegraf parameters
-telegraf_agent_version: 1.12.5
+telegraf_agent_version: 1.12.6
 telegraf_agent_package_method: repo
 telegraf_agent_package_state: present
 telegraf_agent_output:
@@ -28,3 +28,6 @@ telegraf_agent_output:
       - urls = ["http://docker2.mcbadass.local:8086"]
       - database = "computers"
 telegraf_agent_interval: 30
+linux_users_to_remove:
+  - pi
+  - vagrant

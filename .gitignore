@@ -5,4 +5,6 @@ ssh/
 terraform-inventory
 *secret*
 homelab.vmware.yml
-samdoran.fish
+galaxy_roles/
+collections/
+*.tar.gz
