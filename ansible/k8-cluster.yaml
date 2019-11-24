@@ -1,9 +1,12 @@
 ---
 
 - name: K8 Cluster post-terraform
-  hosts: K8-*
+  hosts: k8
   become: true
 
   roles:
-    - role: samdoran.fish
-    - k8s-cluster
+    - { role: galaxy_roles/samdoran.fish, tags: ['fish']}
+    - { role: base, tags: ['base'] }
+    - { role: domain-joined, tags: ['domain-joined'] }
+    - { role: galaxy_roles/dj-wasabi.telegraf, tags: ['telegraf']}
+    - { role: k8s-cluster, tags: ['k8-cluster'] }

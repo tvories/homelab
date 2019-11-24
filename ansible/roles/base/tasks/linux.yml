@@ -21,9 +21,17 @@
     daemon_reload: yes
   tags: ntp
 
+# Ignoring errors because sometimes the pi user has a process in use and I don't want it to fail the whole run
 - name: Ensure certain users doesn't exist
   user:
     name: "{{ item }}"
+    state: absent
+  loop: "{{ linux_users_to_remove }}"
+  ignore_errors: yes
+
+- name: Ensure certain  users sudoers file doesn't exist
+  file:
+    path: /etc/sudoers.d/{{ item }}
     state: absent
   loop: "{{ linux_users_to_remove }}"
   

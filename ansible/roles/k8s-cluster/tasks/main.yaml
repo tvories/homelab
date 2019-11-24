@@ -5,26 +5,6 @@
     name: "*"
     state: latest
 
-- name: Create K8 User account
-  user:
-    name: "{{ k8_username }}"
-    password: "{{ k8_user_password }}"
-    shell: /usr/bin/fish
-
-- name: Add K8 User to sudo
-  lineinfile:
-    path: /etc/sudoers.d/{{ k8_username }}
-    line: '{{ k8_username }} ALL=(ALL) NOPASSWD: ALL'
-    state: present
-    mode: 0440
-    create: yes
-    validate: 'visudo -cf %s'
-
-- name: Ensure vagrant user is gone
-  user:
-    name: vagrant
-    state: absent
-
 - name: Install nfs-utils
   package:
     name: nfs-utils
