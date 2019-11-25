@@ -2,3 +2,6 @@
 
 pfsense_lan_nic: vmx0
 pfsense_wan_nic: vmx1
+
+# Joey Vars
+pfsense_joey_interface: VLAN70JoeyBackup

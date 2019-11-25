@@ -1,0 +1,7 @@
+---
+
+- name: Ensure {{ linux_admin_user }} exists
+  user:
+    name: "{{ joey_admin_user }}"
+    shell: /usr/bin/fish
+    password: "{{ joey_admin_password }}"

@@ -7,3 +7,13 @@
     enable: true
     state: present
     ipv4_address: 192.168.60.1
+    ipv4_type: static
+
+- name: Joey VLAN
+  opoplawski.pfsense.pfsense_interface:
+    descr: "{{ pfsense_joey_interface }}"
+    interface: "{{ pfsense_lan_nic }}.70"
+    enable: true
+    state: present
+    ipv4_address: 192.168.70.1
+    ipv4_type: static

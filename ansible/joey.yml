@@ -1,12 +1,13 @@
 ---
+# Playbook for base systems
 
-- name: K8 Cluster post-terraform
-  hosts: k8
+- name: base profile deployment playbook
+  hosts: joey*
   become: true
 
   roles:
-    - { role: base, tags: ['base'] }
     - { role: galaxy_roles/samdoran.fish, tags: ['fish']}
+    - { role: base, tags: ['base'] }
     - { role: domain-joined, tags: ['domain-joined'] }
     - { role: galaxy_roles/dj-wasabi.telegraf, tags: ['telegraf']}
-    - { role: k8s-cluster, tags: ['k8-cluster'] }
+    - { role: joey, tags: ['joey']}

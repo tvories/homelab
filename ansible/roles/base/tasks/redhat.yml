@@ -1,0 +1,7 @@
+---
+
+# Add epel
+- name: Instal epel-release
+  yum:
+    name: epel-release
+    state: present

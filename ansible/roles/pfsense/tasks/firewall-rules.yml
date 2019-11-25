@@ -1,0 +1,50 @@
+---
+
+# VLAN 70 - Joey's network
+- name: Allow all base
+  opoplawski.pfsense.pfsense_rule:
+    name: 'Allow all base'
+    action: pass
+    interface: "{{ pfsense_joey_interface }}"
+    ipprotocol: inet
+    protocol: any
+    source: any
+    destination: any
+    before: bottom
+    state: present
+
+- name: "Block traffic to internal networks"
+  opoplawski.pfsense.pfsense_rule:
+    name: 'Default block internal network'
+    action: block
+    interface: "{{ pfsense_joey_interface }}"
+    ipprotocol: inet
+    protocol: any
+    source: "NET:{{ pfsense_joey_interface }}"
+    before: Allow all base
+    destination: 192.168.0.0/16
+    state: present
+
+- name: "Allow ping to gateway"
+  opoplawski.pfsense.pfsense_rule:
+    name: 'Allow ping to gateway'
+    action: pass
+    interface: "{{ pfsense_joey_interface }}"
+    ipprotocol: inet
+    protocol: icmp
+    before: Default block internal network
+    source: "NET:{{ pfsense_joey_interface }}"
+    destination: (self)
+    state: present
+
+- name: "Allow SSH"
+  opoplawski.pfsense.pfsense_rule:
+    name: 'Allow SSH to joey server'
+    action: pass
+    interface: "{{ pfsense_joey_interface }}"
+    ipprotocol: inet
+    protocol: tcp/udp
+    before: Default block internal network
+    source: any:42222
+    destination: "{{ joey_static_vm_ip }}:22"
+    state: present
