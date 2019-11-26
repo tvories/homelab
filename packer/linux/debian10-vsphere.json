@@ -1,12 +1,11 @@
 {
     "variables": {
-      "name": "packer-ubuntu-1804",
+      "name": "packer-debian10",
       "disk_size": "20480",
       "headless": "false",
       "vm_hardware_version": "13",
-      "iso_url": "http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-server-amd64.iso",
-      "iso_path": "[SATAStorage] ISO/ubuntu-18.04.3.iso",
-      "iso_checksum": "7d8e0055d663bffa27c1718685085626cb59346e7626ba3d3f476322271f573e",
+      "iso_path": "[SATAStorage] ISO/debian-10.2.0.iso",
+      "iso_checksum": "745172D8BA09F054335CC738409AEDE5C5F3463AE39DF0A008EB41CEEBA44B5C",
       "iso_checksum_type": "sha256",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -41,22 +40,22 @@
       "network_card": "vmxnet3",
       "convert_to_template": true,
       "boot_command": [
-        "<enter><wait><f6><wait><esc><wait>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-          "<bs><bs><bs>",
-          "/install/vmlinuz",
-          " initrd=/install/initrd.gz",
-          " priority=critical",
-          " locale=en_US",
-          " file=/media/preseed.cfg",
-          "<enter>"
+        "<esc><wait>",
+        "install <wait>",
+        " preseed/url=http://{{ .HTTPIP }}:8811/debian-preseed.cfg <wait>",
+        " debian-installer=en_US.UTF-8 <wait>",
+        " auto <wait>",
+        " locale=en_US.UTF-8 <wait>",
+        " kbd-chooser/method=us <wait>",
+        " keyboard-configuration/xkb-keymap=us <wait>",
+        " netcfg/get_hostname={{ .Name }} <wait>",
+        " netcfg/get_domain=vagrantup.com <wait>",
+        " fb=false <wait>",
+        " debconf/frontend=noninteractive <wait>",
+        " console-setup/ask_detect=false <wait>",
+        " console-keymaps-at/keymap=us <wait>",
+        " grub-installer/bootdev=/dev/sda <wait>",
+        "<enter><wait>"
       ],
       "ssh_pty": "true",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
@@ -68,8 +67,12 @@
       "datastore": "{{ user `datastore` }}",
       "folder": "{{ user `folder` }}",
       "floppy_files": [
-        "http/preseed.cfg"
-      ]
+        "http/debian-preseed.cfg"
+      ],
+      "http_directory": "http",
+      "http_ip": "192.168.1.50",
+      "http_port_min": 8811,
+      "http_port_max": 8811
     }
   ],
       
