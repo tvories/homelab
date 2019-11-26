@@ -1,22 +1,22 @@
 # Create a vSphere VM in the folder #
-resource "vsphere_virtual_machine" "K8-MASTER" {
+resource "vsphere_virtual_machine" "morpheus" {
   # VM placement #
-  name             = var.k8_master_name
+  name             = "morpheus"
   resource_pool_id = data.vsphere_resource_pool.resource_pool.id
   datastore_id     = data.vsphere_datastore.LUN03.id
-  folder           = var.k8_vm_folder
-  tags             = [vsphere_tag.k8.id, vsphere_tag.k8_master.id, vsphere_tag.centos.id]
+  folder           = "Linux"
+  tags             = [vsphere_tag.centos.id, vsphere_tag.morpheus.id]
 
   # VM resources #
-  num_cpus = 2
-  memory   = 4096
+  num_cpus = 4
+  memory   = 8192
 
-  # Guest OS #
+  # Guest OS #4
   guest_id = data.vsphere_virtual_machine.centos_template.guest_id
 
   # VM storage #
   disk {
-    label            = "${var.k8_master_name}.vmdk"
+    label            = "morpheus.vmdk"
     size             = data.vsphere_virtual_machine.centos_template.disks[0].size
     thin_provisioned = data.vsphere_virtual_machine.centos_template.disks[0].thin_provisioned
     eagerly_scrub    = data.vsphere_virtual_machine.centos_template.disks[0].eagerly_scrub
@@ -27,11 +27,8 @@ resource "vsphere_virtual_machine" "K8-MASTER" {
   # VM networking #
   network_interface {
     network_id   = data.vsphere_network.LAN.id
-    adapter_type = data.vsphere_virtual_machine.centos_template.network_interface_types[0]
+    adapter_type = "vmxnet3"
   }
-
-  # for vsphere-kubernetes integration
-  enable_disk_uuid = "true"
 
   # Customization of the VM #
   clone {
@@ -39,19 +36,15 @@ resource "vsphere_virtual_machine" "K8-MASTER" {
 
     customize {
       linux_options {
-        host_name = var.k8_master_name
-        domain    = var.vsphere_domain
-        time_zone = var.vsphere_time_zone
+        host_name = "morpheus"
+        domain    = "mcbadass.local"
       }
-
       network_interface {
-        ipv4_address = var.k8_master_ip
-        ipv4_netmask = var.vsphere_ipv4_netmask
+        ipv4_address = "192.168.1.63"
+        ipv4_netmask = 24
       }
-
-      ipv4_gateway    = var.vsphere_ipv4_gateway
-      dns_server_list = var.vsphere_dns_servers
-      dns_suffix_list = [var.vsphere_domain]
+      ipv4_gateway = "192.168.1.1"
+      dns_server_list = ["192.168.1.240", "192.168.1.241"]
     }
   }
 }

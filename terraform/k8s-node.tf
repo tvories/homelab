@@ -8,7 +8,7 @@ resource "vsphere_virtual_machine" "K8-NODE" {
   resource_pool_id = data.vsphere_resource_pool.resource_pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.k8_vm_folder
-  tags             = [data.vsphere_tag.tag.id]
+  tags             = [vsphere_tag.k8.id, vsphere_tag.k8_minion.id, vsphere_tag.centos.id]
 
   # VM resources #
   num_cpus = 2
@@ -32,6 +32,9 @@ resource "vsphere_virtual_machine" "K8-NODE" {
     network_id   = data.vsphere_network.LAN.id
     adapter_type = data.vsphere_virtual_machine.centos_template.network_interface_types[0]
   }
+
+  # for vsphere-kubernetes integration
+  enable_disk_uuid = "true"
 
   # Customization of the VM #
   clone {

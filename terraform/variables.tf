@@ -41,7 +41,7 @@ variable "vsphere_host" {
 
 variable "vsphere_port_group" {
   description = "In which port group the VM NIC will be configured (default: LAN)"
-  default     = "LAN"
+  default     = "VLAN 1 - LAN"
 }
 
 variable "vsphere_ipv4_netmask" {
@@ -76,12 +76,17 @@ variable "vsphere_linux_password" {
 
 variable "vsphere_tag_category" {
   description = "vSphere Tag Catagory Details"
-  default     = "TF"
+  default     = "ansible"
 }
 
-variable "vsphere_tag_name" {
+variable "vsphere_master_tag_name" {
   description = "vSphere Tag Details"
-  default     = "TF"
+  default     = "k8-master"
+}
+
+variable "vsphere_node_tag_name" {
+  description = "vSphere Tag Details"
+  default     = "k8_minion"
 }
 
 variable "vsphere_centos_template" {
