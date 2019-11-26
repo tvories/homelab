@@ -1,0 +1,10 @@
+---
+# Playbook for base systems
+
+- name: base profile deployment playbook
+  hosts: debian, centos
+  become: true
+
+  roles:
+    - role: base
+      tags: ['base']

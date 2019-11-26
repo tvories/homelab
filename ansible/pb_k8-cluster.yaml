@@ -1,0 +1,9 @@
+---
+
+- name: K8 Cluster post-terraform
+  hosts: k8
+  become: true
+
+  roles:
+    - { role: base, tags: ['base'] }
+    - { role: k8s-cluster, tags: ['k8-cluster'] }

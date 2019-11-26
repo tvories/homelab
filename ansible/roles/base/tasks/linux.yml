@@ -1,25 +1,15 @@
 ---
 # Commands shared between linux systems
 
+- name: Setup NTP
+  include_role:
+    name: galaxy_roles/geerlingguy.ntp
+  tags: ntp
+
 - name: Install linux packages
   package:
     name: "{{ linux_packages }}"
     state: present
-
-- name: Configure ntp
-  template:
-    src: ntp.conf.j2
-    dest: /etc/ntp.conf
-    backup: yes
-  tags: ntp
-
-- name: Start ntp service and ensure it's started automatically
-  systemd:
-    name: ntp
-    state: started
-    enabled: yes
-    daemon_reload: yes
-  tags: ntp
 
 # Ignoring errors because sometimes the pi user has a process in use and I don't want it to fail the whole run
 - name: Ensure certain users doesn't exist
@@ -53,3 +43,18 @@
 - name: Set timezone
   timezone:
     name: "{{ timezone }}"
+
+- name: Setup fish shell
+  include_role: 
+    name: galaxy_roles/samdoran.fish
+  tags: fish
+
+- name: Include domain join
+  include_role:
+    name: domain-joined
+  tags: domain-joined
+
+- name: Setup telegraf
+  include_role:
+    name: galaxy_roles/dj-wasabi.telegraf
+  tags: telegraf

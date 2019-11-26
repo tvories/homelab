@@ -25,7 +25,13 @@ RUN \
   setuptools \
   pywinrm \
   pywinrm[kerberos] \
-  kerberos
+  kerberos \
+  jinja2 \
+  netaddr \
+  pbr \
+  hvac \
+  jmespath \
+  ruamel.yaml
 
 RUN \
   pip install --upgrade git+https://github.com/vmware/vsphere-automation-sdk-python.git

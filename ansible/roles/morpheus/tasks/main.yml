@@ -1,0 +1,28 @@
+---
+
+- name: Stop and disable firewalld.
+  service:
+    name: firewalld
+    state: stopped
+    enabled: False
+
+- name: Enable RHEL 7 Server Optional RPMs (RHEL 7 only)
+  command: yum-config-manager --enable rhel-7-server-optional-rpms
+
+- name: Create morpheus staging directory
+  file:
+    path: "{{ morph_staging_directory }}"
+    state: directory
+
+- name: Install morpheus rpm
+  yum:
+    name: "{{ morph_rpm_url }}"
+    state: present
+
+- name: Check status of morpeus-ui
+  command: morpheus-ctl status
+  register: morpheus-status
+
+- name: Reconfigure if morpheus-ui is null
+  command: morpheus-ctl reconfigure
+  when: morpheus-status.stdout == ""

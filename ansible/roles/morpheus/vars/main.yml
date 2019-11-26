@@ -1,0 +1,4 @@
+---
+
+morph_staging_directory: /morph
+morph_rpm_url: https://downloads.morpheusdata.com/files/morpheus-appliance-4.1.1-1.el7.x86_64.rpm

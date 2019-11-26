@@ -1,0 +1,11 @@
+---
+
+- name: Morpheus install and configure
+  hosts: morpheus
+  become: true
+
+  roles:
+    - role: base
+      tags: ['base']
+    - role: morpheus
+      tags: ['morpheus']

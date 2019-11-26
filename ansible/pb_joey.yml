@@ -6,8 +6,5 @@
   become: true
 
   roles:
-    - { role: galaxy_roles/samdoran.fish, tags: ['fish']}
     - { role: base, tags: ['base'] }
-    - { role: domain-joined, tags: ['domain-joined'] }
-    - { role: galaxy_roles/dj-wasabi.telegraf, tags: ['telegraf']}
     - { role: joey, tags: ['joey']}

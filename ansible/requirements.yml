@@ -1,3 +1,4 @@
 # from galaxy
 - src: samdoran.fish
 - src: dj-wasabi.telegraf
+- src: geerlingguy.ntp
