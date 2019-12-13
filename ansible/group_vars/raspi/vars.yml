@@ -4,6 +4,11 @@
 telegraf_plugins_default:
   - plugin: net
   - plugin: disk
+    tags:
+      - diskmetrics = "true"
+    tagpass:
+      - fstype = [ "ext4", "xfs" ]
+      - path = [ "/opt", "/home" ]
   - plugin: io
   - plugin: mem
   - plugin: system
