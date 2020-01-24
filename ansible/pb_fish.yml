@@ -1,0 +1,10 @@
+---
+# Playbook for base systems
+
+- name: Fish only role
+  hosts: debian, centos
+  become: true
+
+  roles:
+    - role: galaxy_roles/samdoran.fish
+      tags: ['fish']

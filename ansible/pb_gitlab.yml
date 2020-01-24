@@ -1,0 +1,23 @@
+---
+
+- name: Install Gitlab
+  hosts: "gitlab"
+  become: true
+
+  roles:
+    - role: galaxy_roles/geerlingguy.gitlab
+      tags: ['gitlab']
+  vars:
+    - gitlab_external_url: "https://gitlab.t-vo.us/"
+    - gitlab_git_data_dir: "/var/opt/gitlab/git-data"
+    - gitlab_backup_path: "/var/opt/gitlab/backups"
+    - gitlab_edition: "gitlab-ce"
+    - gitlab_nginx_listen_https: "false"
+    - gitlab_redirect_http_to_https: "false"
+    - gitlab_create_self_signed_cert: "false"
+    - gitlab_nginx_listen_port: 8083
+    - gitlab_time_zone: "America/Denver"
+    - gitlab_backup_keep_time: "604800"
+    # - gitlab_download_validate_certs: true
+    - gitlab_default_theme: 2
+    - gitlab_version: ''

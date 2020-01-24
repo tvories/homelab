@@ -1,0 +1,10 @@
+---
+# Playbook for base systems
+
+- name: base profile deployment playbook
+  hosts: "DC1*"
+  gather_facts: False
+
+  roles:
+    - role: win-dns
+      tags: ['win-dns']

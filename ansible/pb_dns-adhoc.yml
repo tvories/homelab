@@ -1,0 +1,23 @@
+---
+# Playbook for base systems
+
+- name: DNS AdHoc playbook
+  hosts: "DC1*"
+
+  tasks:
+  # Adhoc task to add a ptr and a dns entry
+  - name: Create test dns A record
+    win_dns_record:
+      name: "{{ dns_adhoc_name }}"
+      type: "A"
+      state: present
+      zone: "{{ dns_adhoc_zone }}"
+      value: "{{ dns_adhoc_ip }}"
+
+  - name: Create test dns A record PTR
+    win_dns_record:
+      name: "{{ dns_adhoc_ip.split('.')[3] }}"
+      type: "PTR"
+      state: present
+      zone: "{{ dns_adhoc_ip.split('.')[2] }}.{{ dns_adhoc_ip.split('.')[1] }}.{{ dns_adhoc_ip.split('.')[0] }}.in-addr.arpa"
+      value: "{{ dns_adhoc_name }}"    

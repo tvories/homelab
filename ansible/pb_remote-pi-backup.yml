@@ -7,3 +7,4 @@
   roles:
     - { role: base, tags: ['base'] }
     - { role: raspi_telegraf, tags: ['raspi_telegraf'] }
+    - { role: remote_pi_backup, tags: ['remote_pi_backup'] }
