@@ -8,3 +8,4 @@ homelab.vmware.yml
 galaxy_roles/
 collections/
 *.tar.gz
+keys/
