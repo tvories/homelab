@@ -31,7 +31,9 @@ RUN \
   pbr \
   hvac \
   jmespath \
-  ruamel.yaml
+  ruamel.yaml \
+  google-auth \
+  requests
 
 RUN \
   pip install --upgrade git+https://github.com/vmware/vsphere-automation-sdk-python.git
