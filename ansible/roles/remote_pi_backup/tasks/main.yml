@@ -1,0 +1,26 @@
+---
+
+- include_vars: secrets.yml
+- include_vars: main.yml
+
+- name: ensure backup user exists
+  user:
+    name: "{{ backup_username }}"
+    shell: /usr/bin/fish
+    password: "{{ backup_password }}"
+    state: present
+
+- name: add backup user to sudo
+  lineinfile:
+    path: /etc/sudoers.d/{{ backup_username }}
+    line: '{{ backup_username }} ALL=(ALL:ALL) ALL'
+    state: present
+    mode: 0440
+    create: yes
+    validate: 'visudo -cf %s'
+
+- name: set pub key for backups
+  authorized_key:
+    user: "{{ backup_username }}"
+    state: present
+    key: "{{ backup_pub_key }}"

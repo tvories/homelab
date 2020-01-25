@@ -1,0 +1,20 @@
+---
+
+# Forward lookup zones
+- name: Create influx dns A record
+  win_dns_record:
+    name: "influx"
+    type: "A"
+    state: present
+    zone: t-vo.us
+    value: 192.168.1.68
+
+- name: Create influx dns A record PTR
+  win_dns_record:
+    name: 68
+    type: "PTR"
+    state: present
+    zone: 1.168.192.in-addr.arpa
+    value: influx.t-vo.us
+
+# TODO: Create reusable task to ensure dns record is created

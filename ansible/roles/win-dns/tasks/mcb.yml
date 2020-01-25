@@ -1,0 +1,36 @@
+---
+
+# Forward lookup zones
+- name: Create test dns A record
+  win_dns_record:
+    name: "test1"
+    type: "A"
+    state: present
+    zone: mcbadass.local
+    value: 192.168.1.221
+
+- name: Create test dns A record PTR
+  win_dns_record:
+    name: 221
+    type: "PTR"
+    state: present
+    zone: 1.168.192.in-addr.arpa
+    value: test1
+
+- name: Create pz2 dns A record
+  win_dns_record:
+    name: "pz2"
+    type: "A"
+    state: present
+    zone: mcbadass.local
+    value: 192.168.1.76
+
+- name: Create pz2 dns A record PTR
+  win_dns_record:
+    name: 76
+    type: "PTR"
+    state: present
+    zone: 1.168.192.in-addr.arpa
+    value: test1
+
+# TODO: Create reusable task to ensure dns record is created
