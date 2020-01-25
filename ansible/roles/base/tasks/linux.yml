@@ -10,6 +10,13 @@
   package:
     name: "{{ linux_packages }}"
     state: present
+    
+# Needs to be before user creation
+# - name: Setup fish shell
+#   include_role: 
+#     name: galaxy_roles/samdoran.fish
+#   tags: fish
+#   ignore_errors: true
 
 # Ignoring errors because sometimes the pi user has a process in use and I don't want it to fail the whole run
 - name: Ensure certain users doesn't exist
@@ -18,6 +25,13 @@
     state: absent
   loop: "{{ linux_users_to_remove }}"
   ignore_errors: yes
+  register: baduser
+
+- name: Set password if it couldn't remove
+  user:
+    name: pi
+    password: "{{ linux_admin_password }}"
+  when: baduser.changed
 
 - name: Ensure certain  users sudoers file doesn't exist
   file:
@@ -30,6 +44,13 @@
     name: "{{ linux_admin_user }}"
     shell: /usr/bin/fish
     password: "{{ linux_admin_password }}"
+    state: present
+
+- name: Set authorized_key for linux admin user
+  authorized_key:
+    user: "{{ linux_admin_user }}"
+    state: present
+    key: "{{ linux_admin_pubkey }}"
 
 - name: Add linux admin user to sudo
   lineinfile:
@@ -43,11 +64,6 @@
 - name: Set timezone
   timezone:
     name: "{{ timezone }}"
-
-- name: Setup fish shell
-  include_role: 
-    name: galaxy_roles/samdoran.fish
-  tags: fish
 
 - name: Include domain join
   include_role:

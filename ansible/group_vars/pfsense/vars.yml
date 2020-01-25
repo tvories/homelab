@@ -2,6 +2,9 @@
 
 pfsense_lan_nic: vmx0
 pfsense_wan_nic: vmx1
+pfsense_wan_interface: WAN
+pfsense_local_alias: rfc1918
+
 
 # Joey Vars
 pfsense_joey_interface: VLAN70JoeyBackup

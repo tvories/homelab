@@ -1,0 +1,14 @@
+---
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: check locale settings
+  command: 'locale'
+  register: locale_status
+  changed_when: false
+  
+- name: Update locale to have utf-8
+  command: 'update-locale LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 ALL=en_US.UTF-8'
+  when: locale_status.stdout.find('UTF-8') == -1

@@ -8,6 +8,7 @@
 
 - name: Enable RHEL 7 Server Optional RPMs (RHEL 7 only)
   command: yum-config-manager --enable rhel-7-server-optional-rpms
+  changed_when: false
 
 - name: Create morpheus staging directory
   file:
@@ -21,8 +22,9 @@
 
 - name: Check status of morpeus-ui
   command: morpheus-ctl status
-  register: morpheus-status
+  changed_when: false
+  register: morpheus_status
 
 - name: Reconfigure if morpheus-ui is null
   command: morpheus-ctl reconfigure
-  when: morpheus-status.stdout == ""
+  when: morpheus_status.stdout == ""
