@@ -1,0 +1,45 @@
+---
+
+vlans:
+  - name: 192.168.1.0/24 - Legacy
+    vlan_id: 1
+    network_mask: 24
+    gateway: 192.168.1.1
+    ipv4_type: static
+    state: present
+
+  - name: 192.168.20.0/24 - Primary
+    vlan_id: 20
+    network_mask: 24
+    ipv4_type: static
+    state: present
+  
+  - name: 192.168.40.0/24 - Guest WiFi
+    vlan_id: 40
+    network_mask: 24
+    ipv4_type: static
+    state: present
+
+  - name: 192.168.50.0/24 - IoT
+    vlan_id: 50
+    network_mask: 24
+    ipv4_type: static
+    state: present
+  
+  - name: 192.168.60.0/24 - DMZ
+    vlan_id: 60
+    network_mask: 24
+    ipv4_type: static
+    state: present
+
+  - name: 192.168.1.70.0/24 - Joey Backup
+    vlan_id: 70
+    network_mask: 24
+    ipv4_type: static
+    state: present
+    
+  - name: TestVLAN 2
+    vlan_id: 71
+    network_mask: 24
+    ipv4_type: static
+    state: absent

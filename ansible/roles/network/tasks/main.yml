@@ -1,0 +1,13 @@
+---
+
+- name: include switch settings
+  include_tasks: switches.yml
+  when: "'switch' in group_names"
+
+- name: include vlans vars
+  include_vars:
+    file: vlans.yml
+    
+- name: include vlans
+  include_tasks: vlans.yml
+  when: "'pfsense' in group_names"

@@ -1,0 +1,10 @@
+---
+# Playbook for wireguard systems
+
+- name: wireguard profile deployment playbook
+  hosts: wireguard*
+  become: true
+
+  roles:
+    - role: wireguard
+      tags: ['wireguard']

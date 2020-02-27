@@ -2,6 +2,9 @@
 # shared vars across all groups
 
 ntpserver: DC1.mcbadass.local
+nameservers:
+  - 192.168.1.240
+  - 192.168.1.241
 timezone: America/Denver
 linux_packages:
   - vim

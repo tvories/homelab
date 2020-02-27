@@ -6,4 +6,5 @@
 
   roles:
     - { role: base, tags: ['base'] }
+    - { role: galaxy_roles/samdoran.fish, tags: ['fish'] }
     - { role: k8s-cluster, tags: ['k8-cluster'] }

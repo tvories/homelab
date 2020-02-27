@@ -1,0 +1,12 @@
+---
+
+- hosts: localhost
+  gather_facts: false
+  connection: local
+
+  collections:
+    - community.kubernetes
+
+  roles:
+    - role: k8
+      tags: ['k8']

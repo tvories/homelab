@@ -1,0 +1,13 @@
+---
+
+- name: Include vlan vars
+  include_vars:
+    file: vlans.yml
+
+- name: Apply VLANs
+  pfsensible.core.vlan:
+    interface: "{{ pfsense_lan_nic }}"
+    vlan_id: "{{ item.vlan_id }}"
+    descr: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ vlans }}"

@@ -1,21 +1,17 @@
-FROM jfloff/alpine-python:latest
+FROM python:3.8-buster
 
 # Kerberos auth not currently working
 # COPY krb5.conf /etc/krb5.conf
 
 RUN \
-  apk add build-base \
-  openssl-dev \
+  export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y build-essential \
   libxml2-dev \
   libxslt-dev \
   openssh-client \
-  py3-jinja2 \
-  py3-httplib2 \
+  python3-jinja2 \
+  python3-httplib2 \
   sshpass \
-  krb5 \
-  krb5-dev \
-  krb5-libs \
-  libcom_err \
+  krb5-user \
   musl
 
 RUN \
@@ -33,7 +29,9 @@ RUN \
   jmespath \
   ruamel.yaml \
   google-auth \
-  requests
+  requests \
+  openshift \
+  paramiko
 
 RUN \
   pip install --upgrade git+https://github.com/vmware/vsphere-automation-sdk-python.git
