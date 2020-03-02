@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gogs
+spec:
+  externalName: "docker2.mcbadass.local"
+  type: ExternalName

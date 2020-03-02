@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landing
+  labels:
+    k8s-app: landing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: landing
+  template:
+    metadata:
+      labels:
+        k8s-app: landing
+    spec:
+      containers:
+      - name: landing
+        image: tvories/t-vo-us:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP

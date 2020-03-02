@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: transmission
+spec:
+  externalName: "docker2.mcbadass.local"
+  type: ExternalName
+  

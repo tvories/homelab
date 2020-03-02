@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nextcloud
+spec:
+  externalName: "docker2.mcbadass.local"
+  type: ExternalName

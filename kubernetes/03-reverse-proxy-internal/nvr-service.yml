@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nvr
+spec:
+  externalName: "nvr.mcbadass.local"
+  type: ExternalName
+  
