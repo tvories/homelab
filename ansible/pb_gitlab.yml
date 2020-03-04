@@ -21,3 +21,60 @@
     # - gitlab_download_validate_certs: true
     - gitlab_default_theme: 2
     - gitlab_version: ''
+
+- name: K8 Ingress
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  collections:
+    - community.kubernetes
+
+  tasks:
+    - name: Ensure external k8 service exists.
+      k8s:
+        namespace: default
+        definition:
+          api_version: v1
+          kind: Service
+          metadata:
+            name: gitlab
+          spec:
+            externalName: "192.168.1.92"
+            type: ExternalName
+        state: present
+      tags:
+      - k8
+    
+    - name: Ensure gitlab ingress exists
+      k8s:
+        namespace: default
+        definition:
+          apiVersion: extensions/v1beta1
+          kind: Ingress
+          metadata:
+            name: gitlab-ingress
+            annotations:
+              ingress.kubernetes.io/ssl-redirect: "true"
+              kubernetes.io/tls-acme: "true"
+              kubernetes.io/ingress.class: nginx-ingress-external
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+              nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For, X-Real-IP, X-Frame-Options, X-Content-Type-Options, X-Forwarded-Proto"
+          spec:
+            tls:
+            - hosts:
+              - gitlab.t-vo.us
+              secretName: gitlab-t-vo-us
+            rules:
+            - host: gitlab.t-vo.us
+              http:
+                paths:
+                - backend:
+                    serviceName: gitlab
+                    servicePort: 8083
+          status:
+            loadBalancer: {}
+        state: present
+      tags:
+      - k8
