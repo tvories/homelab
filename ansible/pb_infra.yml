@@ -1,0 +1,170 @@
+---
+
+# Infrastructure/general rules that don't
+# fit in a specific service
+
+- hosts: cisco, pfsense
+  become: yes
+  gather_facts: no
+  collections:
+    - pfsensible.core
+  vars:
+    vlans:
+      - name: 192.168.1.0/24 - Legacy
+        vlan_id: 1
+        network_mask: 24
+        gateway: 192.168.1.1
+        ipv4_type: static
+        state: present
+        switch_state: merged
+
+      - name: 192.168.20.0/24 - Primary
+        vlan_id: 20
+        network_mask: 24
+        ipv4_type: static
+        state: present
+        switch_state: merged
+      
+      - name: 192.168.40.0/24 - Guest WiFi
+        vlan_id: 40
+        network_mask: 24
+        ipv4_type: static
+        state: present
+        switch_state: merged
+
+      - name: 192.168.50.0/24 - IoT
+        vlan_id: 50
+        network_mask: 24
+        ipv4_type: static
+        state: present
+        switch_state: merged
+      
+      - name: 192.168.60.0/24 - DMZ
+        vlan_id: 60
+        network_mask: 24
+        ipv4_type: static
+        state: present
+        switch_state: merged
+
+      - name: 192.168.1.70.0/24 - Joey Backup
+        vlan_id: 70
+        network_mask: 24
+        ipv4_type: static
+        state: present
+        switch_state: merged
+        
+      - name: TestVLAN 2
+        vlan_id: 71
+        network_mask: 24
+        ipv4_type: static
+        state: absent
+        switch_state: deleted
+    ports:
+      - name: esx4-vmnic0-mgmt
+        interface: 1
+        mode: access
+        vlan: 1
+
+      - name: esx4-vmnic1-vmotion
+        interface: 2
+        mode: access
+        vlan: 1
+
+      - name: esx4-vmnic2-vmguest
+        interface: 3
+        mode: trunk
+        vlan:
+
+      - name: esx4-vmnic3-vmguest
+        interface: 4
+        mode: trunk
+        vlan:
+
+      - name: esx4-vmnic4-iSCSI1
+        interface: 5
+        mode: access
+        vlan: 20
+      
+      - name: esx4-vmnic5-iSCSI2
+        interface: 6
+        mode: access
+        vlan: 21
+
+      - name: esx4-vmnic6-iSCSI3
+        interface: 7
+        mode: access
+        vlan: 22
+
+      - name: esx4-vmnic7-iSCSI4
+        interface: 8
+        mode: access
+        vlan: 23
+
+      - name: r510-bce0-mgmt
+        interface: 9
+        mode: access
+        vlan: 1
+
+      - name: r510-igb0-iSCSI1
+        interface: 10
+        mode: access
+        vlan: 20
+      
+      - name: r510-igb1-iSCSI2
+        interface: 11
+        mode: access
+        vlan: 21
+
+      - name: r510-igb2-iSCSI3
+        interface: 12
+        mode: access
+        vlan: 22
+
+      - name: r510-igb3-iSCSI4
+        interface: 13
+        mode: access
+        vlan: 23
+      
+      - name: uplink-to-nortel
+        interface: 47
+        mode: trunk
+        vlan: 
+        native_vlan: 1
+  roles:
+    - role: network
+      tags: ['network']
+
+- hosts: pfsense
+  become: yes
+  gather_facts: no
+  collections:
+    - pfsensible.core
+  vars:
+
+    nat:
+      - name: Test nat rule
+        interface: wan
+        source: any
+        destination: IP:wan:48222
+        target: 192.168.2.100:48223
+        associated_rule: pass
+        state: absent
+
+      - name: MQTT External
+        interface: wan
+        source: any
+        destination: IP:wan:8883
+        target: 192.168.1.68:8883
+        associated_rule: associated
+        state: present
+
+      - name: Web to nginx-ingress
+        interface: wan
+        source: any
+        destination: IP:wan:80
+        target: 192.168.1.191:80
+        associated_rule: associated
+        state: present
+  roles:
+    - role: firewall
+      tags: ['firewall']
