@@ -1,0 +1,20 @@
+---
+# Playbook DHCP
+
+- name: DHCP Settings
+  hosts: "DC1*"
+  roles:
+    - role: dhcp
+      tags: ['dhcp']
+
+  vars:
+    dhcp_scopes:
+      - Name: TestScope
+        Ensure: present
+        ScopeId: 192.168.56.0
+        IPStartRange: 192.168.56.100
+        IPEndRange: 192.168.56.200
+        SubnetMask: 255.255.255.0
+        LeaseDuration: 45:00
+        State: active
+        AddressFamily: IPv4

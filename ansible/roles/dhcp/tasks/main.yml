@@ -1,0 +1,21 @@
+---
+
+- name: Ensure xDhcpServerScope DSC module is installed
+  win_psmodule:
+    name: xDhcpServer
+    repository: PSGallery
+    state: present
+
+- name: Run DCHP Scope configuration
+  win_dsc:
+    resource_name: xDhcpServerScope
+    Ensure: "{{ item.Ensure }}"
+    ScopeId: "{{ item.ScopeId }}"
+    IPStartRange: "{{ item.IPStartRange }}"
+    IPEndRange: "{{ item.IPEndRange }}"
+    Name: "{{ item.Name }}"
+    SubnetMask: "{{ item.SubnetMask }}"
+    LeaseDuration: "{{ item.LeaseDuration }}"
+    State: "{{ item.State }}"
+    AddressFamily: "{{ item.AddressFamily }}"
+  loop: "{{ dhcp_scopes }}"
