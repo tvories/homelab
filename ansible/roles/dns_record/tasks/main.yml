@@ -1,0 +1,27 @@
+---
+
+- name: Ensure xDnsServer DSC module is installed
+  win_psmodule:
+    name: xDnsServer
+    repository: PSGallery
+    state: present
+
+- name: Run DNS record configuration
+  win_dsc:
+    resource_name: xDnsRecord
+    Name: "{{ item.Name }}"
+    Zone: "{{ item.Zone }}"
+    Target: "{{ item.Target }}"
+    Type: "{{ item.Type }}"
+    Ensure: "{{ item.Ensure }}"
+  loop: "{{ dns_records }}"
+
+- name: Run DNS PTR configuration
+  win_dsc:
+    resource_name: xDnsRecord
+    Name: "{{ item.Target.split('.')[3] }}"
+    Target: "{{ item.Name }}.{{ item.Zone }}"
+    Zone: "{{ item.Target.split('.')[2] }}.{{ item.Target.split('.')[1] }}.{{ item.Target.split('.')[0] }}.in-addr.arpa"
+    Type: PTR
+    Ensure: "{{ item.Ensure }}"
+  loop: "{{ dns_records }}"

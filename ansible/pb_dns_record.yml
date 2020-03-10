@@ -1,0 +1,16 @@
+---
+# Playbook DHCP
+
+- name: DHCP Settings
+  hosts: "DC1*"
+  roles:
+    - role: dns_record
+      tags: ['dns_record']
+
+  vars:
+    dns_records:
+      - Name: TestDns
+        Zone: mcbadass.local
+        Target: 192.168.56.200
+        Type: ARecord
+        Ensure: present
