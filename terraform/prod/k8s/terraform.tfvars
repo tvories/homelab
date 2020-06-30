@@ -1,0 +1,15 @@
+# vCenter
+vsphere_vcenter = "vcenter.mcbadass.local"
+vsphere_unverified_ssl = "true"
+# K8 Nodes
+vsphere_k8_nodes = "2"
+vsphere_k8_win_nodes = "1"
+vsphere_vm_name_k8n1 = "K8-NODE"
+vsphere_vm_name_k8_win = "K8-WIN-Minion"
+vsphere_ipv4_address_k8n1_network = "192.168.1."
+vsphere_ipv4_address_k8n1_host = "181"
+k8_master_name = "K8-Master"
+k8_node_name = "K8-Minion"
+k8_vm_folder = "K8s"
+k8_master_ip = "192.168.1.180"
+vsphere_ip4v_address_win_minion_host = "186"
